@@ -51,20 +51,6 @@ error() {
 readonly BB_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 readonly BB_LIB_DIR="$BB_DIR/lib"
 
-# readonly PROJECT_DIR="$(cd "$(dirname $BB_LIB_DIR/../../)"; pwd -P)"
-# readonly CONFIG_DIR="$PROJECT_DIR/config"
-
-# # loads .env
-# if [ ! -f "$CONFIG_DIR/.env" ]; then
-#     echo "Create $CONFIG_DIR/.env"
-#     exit 1
-# fi
-
-# # make .env variables global for every script
-# if [ -f "$CONFIG_DIR/.env" ]; then
-#   export $(cat "$CONFIG_DIR/.env" | sed 's/#.*//g' | xargs)
-# fi
-
 # source "$BB_LIB_DIR/config.sh"
 source "$BB_LIB_DIR/http.sh"
 source "$BB_LIB_DIR/validations.sh"

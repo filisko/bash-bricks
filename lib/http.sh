@@ -14,7 +14,7 @@ bb_curl() {
         return $curl_status
     fi
 
-    # 200,201,2xx is 0 (success in "bash" language)
+    # 200,201,2xx will return 0 status
     if [ $FIRST_NUMBER_HTTP_STATUS -eq 2 ]; then
         FIRST_NUMBER_HTTP_STATUS=0
     fi
