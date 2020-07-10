@@ -48,22 +48,23 @@ error() {
 # echo $(error; yellow "My warning!")
 
 # DIRS
-readonly CORE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-readonly LIB_DIR="$(cd "$(dirname $CORE_DIR/../../)"; pwd -P)"
-readonly PROJECT_DIR="$(cd "$(dirname $LIB_DIR/../../)"; pwd -P)"
-readonly CONFIG_DIR="$PROJECT_DIR/config"
+readonly BB_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+readonly BB_LIB_DIR="$BB_DIR/lib"
 
-# loads .env
-if [ ! -f "$CONFIG_DIR/.env" ]; then
-    echo "Create $CONFIG_DIR/.env"
-    exit 1
-fi
+# readonly PROJECT_DIR="$(cd "$(dirname $BB_LIB_DIR/../../)"; pwd -P)"
+# readonly CONFIG_DIR="$PROJECT_DIR/config"
 
-# make .env variables global for every script
-if [ -f "$CONFIG_DIR/.env" ]; then
-  export $(cat "$CONFIG_DIR/.env" | sed 's/#.*//g' | xargs)
-fi
+# # loads .env
+# if [ ! -f "$CONFIG_DIR/.env" ]; then
+#     echo "Create $CONFIG_DIR/.env"
+#     exit 1
+# fi
 
-source "$CORE_DIR/lib/http.sh"
-source "$CORE_DIR/lib/notifications.sh"
-source "$CORE_DIR/lib/validations.sh"
+# # make .env variables global for every script
+# if [ -f "$CONFIG_DIR/.env" ]; then
+#   export $(cat "$CONFIG_DIR/.env" | sed 's/#.*//g' | xargs)
+# fi
+
+source "$BB_LIB_DIR/http.sh"
+source "$BB_LIB_DIR/notifications.sh"
+source "$BB_LIB_DIR/validations.sh"
