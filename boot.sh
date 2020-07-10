@@ -65,6 +65,7 @@ readonly BB_LIB_DIR="$BB_DIR/lib"
 #   export $(cat "$CONFIG_DIR/.env" | sed 's/#.*//g' | xargs)
 # fi
 
+# source "$BB_LIB_DIR/config.sh"
 source "$BB_LIB_DIR/http.sh"
-source "$BB_LIB_DIR/notifications.sh"
 source "$BB_LIB_DIR/validations.sh"
+source "$BB_LIB_DIR/notifications.sh"

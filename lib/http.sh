@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-my_curl() {
+bb_curl() {
     # store the whole response with the status at the and
     HTTP_RESPONSE=$(curl --silent --show-error --write-out "HTTPSTATUS:%{http_code}" $@ 2>&1)
     curl_status=$?

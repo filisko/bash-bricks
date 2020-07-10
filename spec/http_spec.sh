@@ -2,14 +2,14 @@
 
 Include lib/http.sh
 
-Describe 'my_curl'
+Describe 'bb_curl'
   It 'returns same curl status and error message when curl fails'
     curl() {
       echo "curl error"
       return 5
     }
 
-    When call my_curl -X POST -F "client_id=123" http://test.com
+    When call bb_curl -X POST -F "client_id=123" http://test.com
     The output should equal "curl error"
     The status should equal 5
   End
@@ -19,7 +19,7 @@ Describe 'my_curl'
       echo "<html>content</html>HTTPSTATUS:301"
     }
 
-    When call my_curl -X POST -F "client_id=123" http://test.com
+    When call bb_curl -X POST -F "client_id=123" http://test.com
     The status should equal 3
     The output should equal "<html>content</html>"
   End
@@ -29,7 +29,7 @@ Describe 'my_curl'
       echo "<html>content</html>HTTPSTATUS:201"
     }
 
-    When call my_curl -X POST -F "client_id=123" http://test.com
+    When call bb_curl -X POST -F "client_id=123" http://test.com
     The status should equal 0
     The output should equal "<html>content</html>"
   End
