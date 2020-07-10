@@ -2,7 +2,7 @@
 # Determine if we're interactive or not
 is_tty() { test -t 1; }
 
-# only output colors if our output is to terminal
+# only output colors if our output is to terminala
 # https://misc.flogisoft.com/bash/tip_colors_and_formatting
 if is_tty; then
     GREEN="\033[0;32m"
