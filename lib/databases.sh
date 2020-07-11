@@ -1,20 +1,42 @@
 #!/usr/bin/env bash
 
+bb_mysql_check_env() {
+    if [ "$DB_HOST" = "" ] || [ "$DB_PASSWORD" = "" ] || [ "$DB_USER" = "" ]; then
+        return 1
+    fi
+}
+
 bb_mysql() {
-    mysql --defaults-extra-file=<(echo $'[client]\npassword='"$AUXMONEY_DB_PASSWORD") \
-        -h "$AUXMONEY_DB_IP" \
-        -u "$AUXMONEY_DB_USER" \
+    if ! bb_mysql_check_env; then
+        echo "Please configure DB_HOST, DB_USER, DB_PASSWORD and DB_PORT (this one optional) on your env file."
+        return 1
+    fi
+
+
+    port=${DB_PORT:-3306}
+
+    mysql --defaults-extra-file=<(echo $'[client]\npassword='"$DB_PASSWORD") \
+        -h "$DB_HOST" \
+        -P "$port" \
+        -u "$DB_USER" \
         -e "$1"
 }
 
 bb_mysql_raw() {
-    mysql --defaults-extra-file=<(echo $'[client]\npassword='"$AUXMONEY_DB_PASSWORD") \
+    if ! bb_mysql_check_env; then
+        echo "Please configure DB_HOST, DB_USER, DB_PASSWORD and DB_PORT (this one optional) on your env file."
+        return 1
+    fi
+
+    port=${DB_PORT:-3306}
+
+    mysql --defaults-extra-file=<(echo $'[client]\npassword='"$DB_PASSWORD") \
         --batch \
         -N \
         --disable-column-names \
-        -h "$AUXMONEY_DB_IP" \
-        -P "$AUXMONEY_DB_PORT" \
-        -u "$AUXMONEY_DB_USER" \
+        -h "$DB_HOST" \
+        -P "$port" \
+        -u "$DB_USER" \
         -e "$1"
 }
 # csv_result=$(bb_mysql_csv_n "SELECT ref,title,location FROM announcements.announcement LIMIT 5")
@@ -26,3 +48,5 @@ bb_mysql_raw() {
 # done
 # IFS=$OLDIFS
 
+# # csv_result=$(bb_mysql_csv_n "SELECT ref,title,location FROM announcements.announcement LIMIT 5" | awk -F'\t' '{ sep=""; for(i = 1; i <= NF; i++) { gsub(/\\t/,"\t",$i); gsub(/\\n/,"\n",$i); gsub(/\\\\/,"\\",$i); gsub(/"/,"\"\"",$i); printf sep"\""$i"\""; sep=","; if(i==NF){printf"\n"}}}')
+# # csv_result=$(bb_mysql_csv_n "SELECT ref,title,location FROM announcements.announcement LIMIT 5")
