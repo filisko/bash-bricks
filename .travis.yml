@@ -3,3 +3,11 @@ os:
     - osx
 
 language: bash
+
+before_install:
+    - curl -fsSL https://git.io/shellspec | sh
+#     - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew update; fi
+#     - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew install graphviz; fi
+
+script:
+    - shellspec
