@@ -54,7 +54,7 @@ End
 
 Describe 'upper'
   Parameters
-    "no spaces returns same text" "text" "TEXT"
+    "happy" "text one TWO" "TEXT ONE TWO"
   End
 
   Data:expand
@@ -63,6 +63,52 @@ Describe 'upper'
 
   Example "$1"
     When call upper
+    The output should equal "$3"
+  End
+End
+
+Describe 'lower'
+  Parameters
+    "happy" "ONE two" "one two"
+  End
+
+  Data:expand
+    #|$2
+  End
+
+  Example "$1"
+    When call lower
+    The output should equal "$3"
+  End
+End
+
+Describe 'camel'
+  Parameters
+    "happy" "One two" "OneTwo"
+  End
+
+  Data:expand
+    #|$2
+  End
+
+  Example "$1"
+    When call camel
+    The output should equal "$3"
+  End
+End
+
+Describe 'snake'
+  Parameters
+    "happy" "One twO" "one_tw_o"
+    "happy2" "One twO" "one_tw_o"
+  End
+
+  Data:expand
+    #|$2
+  End
+
+  Example "$1"
+    When call snake
     The output should equal "$3"
   End
 End
