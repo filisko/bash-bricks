@@ -2,7 +2,7 @@
 # Determine if we're interactive or not
 is_tty() { test -t 1; }
 
-# only output colors if our output is to terminala
+# only output colors if our output is to terminal
 # https://misc.flogisoft.com/bash/tip_colors_and_formatting
 if is_tty; then
     GREEN="\033[0;32m"
@@ -54,4 +54,4 @@ readonly BB_LIB_DIR="$BB_DIR/lib"
 # source "$BB_LIB_DIR/config.sh"
 source "$BB_LIB_DIR/http.sh"
 source "$BB_LIB_DIR/validations.sh"
-source "$BB_LIB_DIR/notifications.sh"
+source "$BB_LIB_DIR/arrays.sh"
