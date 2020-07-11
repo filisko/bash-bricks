@@ -1,59 +1,50 @@
 #!/usr/bin/env bash
 
-# if ! [[ "$OSTYPE" == "darwin"* ]] && ! [[ "$OSTYPE" == "linux"* ]]; then
-#     echo "You are not using Mac or Linux";
-#     exit 1
-# fi
+is_linux() {
+    if [[ "$OSTYPE" == "linux"* ]]; then
+        return 0
+    fi
 
-# declare -a deps=("httpie" "mycli" "pup" "jq")
+    return 1
+}
 
-# if [[ "$OSTYPE" == "darwin"* ]]; then
-#   echo "MacOS was detected ..."
+is_osx() {
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        return 0
+    fi
+    return 1
+}
 
-#   if ! which brew > /dev/null; then
-#     echo "install brew and know what it is ;) https://brew.sh/"
-#     exit 1
-#   fi
+check_package_manager() {
+    if (is_linux) && (! which apt-get > /dev/null || ! which dpkg-query > /dev/null); then
+        echo "install apt-get (debian/ubuntu)  to be able to use packages helpers"
+        exit 1
+    fi
 
-#   for dep in "${deps[@]}"; do
-#     echo -n $(yellow "checking if $dep is installed... ") 
-    
-#     if ! brew ls --versions "$dep" > /dev/null; then
-#       echo $(error)
-#       echo $(green "installing "$dep" ...") 
-#       brew install "$dep"
-#     else
-#       echo $(success) 
-#     fi
-#   done
-# fi
+    if is_osx && ! which brew > /dev/null; then
+        echo "install brew to be able to use packages helpers https://brew.sh/"
+        exit 1
+    fi
+}
 
-# if [[ "$OSTYPE" == "linux"* ]]; then
-#   echo "Linux was detected ..."
-  
-#   if ! which apt-get > /dev/null; then
-#     echo "install apt-get (debian/ubuntu)"
-#     exit 1
-#   fi
+install_package() {
+    if is_linux; then
+        sudo apt-get install -y "$1"
+    fi
 
-#   for dep in "${deps[@]}"; do
-#     echo -n $(yellow "checking if $dep is installed... ") 
-    
-#     if ! dpkg-query -l | grep "$dep" > /dev/null; then
-#       echo $(error)
-#       echo $(green "installing "$dep" ...") 
-#       sudo apt-get install -y "$dep"
-#     else
-#       echo $(success) 
-#     fi
-#   done
-# fi
+    if is_osx && ! which brew > /dev/null; then
+        brew install "$1"
+    fi
+}
 
+is_package_installed() {
+    if is_linux && ! dpkg-query -l | grep "$1" > /dev/null; then
+        return 1
+    fi
 
-# DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-# if [ ! -f "$DIR/.env" ]; then
-#     cp "$DIR/.env.example" "$DIR/.env" 
-#     echo "copying .env.example to .env"
-# fi
+    if is_osx && ! brew ls --versions "$1" > /dev/null; then
+        return 1
+    fi
+}
 
-# echo $(green "everything is setup!")
+check_package_manager

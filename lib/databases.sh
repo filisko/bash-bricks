@@ -12,9 +12,7 @@ bb_mysql() {
         return 1
     fi
 
-
     port=${DB_PORT:-3306}
-
     mysql --defaults-extra-file=<(echo $'[client]\npassword='"$DB_PASSWORD") \
         -h "$DB_HOST" \
         -P "$port" \
@@ -29,7 +27,6 @@ bb_mysql_raw() {
     fi
 
     port=${DB_PORT:-3306}
-
     mysql --defaults-extra-file=<(echo $'[client]\npassword='"$DB_PASSWORD") \
         --batch \
         -N \
