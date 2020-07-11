@@ -99,8 +99,8 @@ End
 
 Describe 'snake'
   Parameters
-    "happy" "One twO" "one_tw_o"
-    "happy2" "One twOto" "one_tw_oto"
+    "happy" "One" "one"
+    "happy" "One twOThreeFour" "one_tw_o_three_four"
   End
 
   Data:expand
