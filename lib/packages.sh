@@ -16,6 +16,11 @@ is_osx() {
 }
 
 check_package_manager() {
+    if ! is_linux && ! is_osx; then
+        echo "your Operating System is not supported"
+        exit 1
+    fi
+
     if (is_linux) && (! which apt-get > /dev/null || ! which dpkg-query > /dev/null); then
         echo "install apt-get (debian/ubuntu)  to be able to use packages helpers"
         exit 1
