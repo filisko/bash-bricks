@@ -5,7 +5,7 @@ os:
 language: bash
 
 before_install:
-    - curl -fsSL https://git.io/shellspec | sh
+    - wget https://git.io/shellspec && sh ./shellspec --yes && rm shellspec
 #     - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew update; fi
 #     - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew install graphviz; fi
 
