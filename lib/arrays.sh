@@ -40,21 +40,3 @@ join_lines()
     done | sed "s/$delim$//"
     echo
 }
-
-bb_mysql() {
-    mysql --defaults-extra-file=<(echo $'[client]\npassword='"$AUXMONEY_DB_PASSWORD") \
-        -h "$AUXMONEY_DB_IP" \
-        -u "$AUXMONEY_DB_USER" \
-        -e "$1"
-}
-
-bb_mysql_csv() {
-    # --disable-column-names \
-    # --batch 
-    # --silent 
-    mysql --defaults-extra-file=<(echo $'[client]\npassword='"$AUXMONEY_DB_PASSWORD") \
-        --batch \
-        -h "$AUXMONEY_DB_IP" \
-        -u "$AUXMONEY_DB_USER" \
-        -e "$1"
-}
