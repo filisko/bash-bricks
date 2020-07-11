@@ -51,3 +51,18 @@ Describe 'trim'
     The output should equal "$3"
   End
 End
+
+Describe 'upper'
+  Parameters
+    "no spaces returns same text" "text" "TEXT"
+  End
+
+  Data:expand
+    #|$2
+  End
+
+  Example "$1"
+    When call upper
+    The output should equal "$3"
+  End
+End
