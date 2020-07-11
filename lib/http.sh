@@ -23,23 +23,10 @@ bb_curl() {
     printf "$HTTP_BODY"
     return $FIRST_NUMBER_HTTP_STATUS
 }
-# example
-# response=$(my_curl -X POST -F 'grant_type=password' \
-#   -F "client_id=$SALESFORCE_CLIENT_ID" \
-#   -F "client_secret=$SALESFORCE_CLIENT_SECRET" \
-#   -F "username=$SALESFORCE_USERNAME" \
-#   -F "password=$SALESFORCE_PASSWORD" \
-#   $URL)
-# code=$?
-# if [ $code -eq 0 ]; then
-#   echo "success"
-# else
-#   echo "failed"
-# fi
 
 bb_http_check() {
-    if [[ -z "$BB_PACKAGES_LOADED" ]]; then
-        echo "packages.sh helpers must be loaded before http.sh"
+    if [[ -z "$BB_COMMON_LOADED" ]]; then
+        echo "common.sh must be loaded before http.sh"
         exit 1
     fi
 

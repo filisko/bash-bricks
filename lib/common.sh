@@ -4,7 +4,6 @@ is_linux() {
     if [[ "$OSTYPE" == "linux"* ]]; then
         return 0
     fi
-
     return 1
 }
 

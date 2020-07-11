@@ -20,18 +20,6 @@ bb_mysql_raw() {
         -u "$DB_USER" \
         -e "$1"
 }
-# csv_result=$(bb_mysql_csv_n "SELECT ref,title,location FROM announcements.announcement LIMIT 5")
-# OLDIFS=$IFS
-# IFS=$'\t'
-# echo "$csv_result" | while read ref title location
-# do
-#     echo "$ref $title $location"
-# done
-# IFS=$OLDIFS
-
-# # csv_result=$(bb_mysql_csv_n "SELECT ref,title,location FROM announcements.announcement LIMIT 5" | awk -F'\t' '{ sep=""; for(i = 1; i <= NF; i++) { gsub(/\\t/,"\t",$i); gsub(/\\n/,"\n",$i); gsub(/\\\\/,"\\",$i); gsub(/"/,"\"\"",$i); printf sep"\""$i"\""; sep=","; if(i==NF){printf"\n"}}}')
-# # csv_result=$(bb_mysql_csv_n "SELECT ref,title,location FROM announcements.announcement LIMIT 5")
-
 
 bb_databases_check() {
     if [[ -z "$BB_COMMON_LOADED" ]]; then
@@ -39,13 +27,13 @@ bb_databases_check() {
         exit 1
     fi
 
-    if [[ "$DB_HOST" = "" ]] || [[ "$DB_USER" = "" ]] || [[ "$DB_PASSWORD" = "" ]]; then
-        echo "Please configure DB_HOST, DB_USER, DB_PASSWORD and DB_PORT (this one optional) on your env file."
+    if ! binary_exists "mysql"; then
+        echo "Install mysql for mysql binary to be available"
         exit 1
     fi
 
-    if ! binary_exists "mysql"; then
-        echo "Install mysql for mysql binary to be available"
+    if [[ -z "$DB_HOST" ]] || [[ -z "$DB_USER" ]] || [[ -z "$DB_PASSWORD" ]]; then
+        echo "Please configure DB_HOST, DB_USER, DB_PASSWORD and DB_PORT (this one optional) on your env file."
         exit 1
     fi
 }

@@ -21,6 +21,11 @@ is_package_installed() {
 }
 
 bb_packages_check() {
+    if [[ -z "$BB_COMMON_LOADED" ]]; then
+        echo "common.sh must be loaded before packages.sh"
+        exit 1
+    fi
+
     if ! is_linux && ! is_osx; then
         echo "your Operating System is not supported for packages helpers"
         exit 1
