@@ -50,11 +50,3 @@ error() {
 # DIRS
 readonly BB_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 readonly BB_LIB_DIR="$BB_DIR/lib"
-
-# source "$BB_LIB_DIR/config.sh"
-source "$BB_LIB_DIR/http.sh"
-source "$BB_LIB_DIR/validations.sh"
-source "$BB_LIB_DIR/arrays.sh"
-source "$BB_LIB_DIR/databases.sh"
-source "$BB_LIB_DIR/strings.sh"
-source "$BB_LIB_DIR/packages.sh"

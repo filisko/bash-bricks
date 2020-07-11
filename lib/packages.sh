@@ -15,29 +15,13 @@ is_osx() {
     return 1
 }
 
-check_package_manager() {
-    if ! is_linux && ! is_osx; then
-        echo "your Operating System is not supported"
-        exit 1
-    fi
-
-    if (is_linux) && (! which apt-get > /dev/null || ! which dpkg-query > /dev/null); then
-        echo "install apt-get (debian/ubuntu)  to be able to use packages helpers"
-        exit 1
-    fi
-
-    if is_osx && ! which brew > /dev/null; then
-        echo "install brew to be able to use packages helpers https://brew.sh/"
-        exit 1
-    fi
-}
 
 install_package() {
     if is_linux; then
         sudo apt-get install -y "$1"
     fi
 
-    if is_osx && ! which brew > /dev/null; then
+    if is_osx && ! binary_exists "brew"; then
         brew install "$1"
     fi
 }
@@ -52,4 +36,28 @@ is_package_installed() {
     fi
 }
 
-check_package_manager
+binary_exists() {
+    if ! which "$1" > /dev/null; then
+        return 1
+    fi
+}
+
+bb_packages_check() {
+    if ! is_linux && ! is_osx; then
+        echo "your Operating System is not supported, remove do not load packages module please"
+        exit 1
+    fi
+
+    if (is_linux) && (! binary_exists "apt-get" || ! binary_exists "dpkg-query"); then
+        echo "install apt-get (debian/ubuntu)  to be able to use packages helpers"
+        exit 1
+    fi
+
+    if is_osx && ! binary_exists "brew" > /dev/null; then
+        echo "install brew to be able to use packages helpers https://brew.sh/"
+        exit 1
+    fi
+}
+
+bb_packages_check
+BB_PACKAGES_LOADED=1

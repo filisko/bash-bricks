@@ -1,17 +1,6 @@
 #!/usr/bin/env bash
 
-bb_mysql_check_env() {
-    if [ "$DB_HOST" = "" ] || [ "$DB_PASSWORD" = "" ] || [ "$DB_USER" = "" ]; then
-        return 1
-    fi
-}
-
 bb_mysql() {
-    if ! bb_mysql_check_env; then
-        echo "Please configure DB_HOST, DB_USER, DB_PASSWORD and DB_PORT (this one optional) on your env file."
-        return 1
-    fi
-
     port=${DB_PORT:-3306}
     mysql --defaults-extra-file=<(echo $'[client]\npassword='"$DB_PASSWORD") \
         -h "$DB_HOST" \
@@ -21,11 +10,6 @@ bb_mysql() {
 }
 
 bb_mysql_raw() {
-    if ! bb_mysql_check_env; then
-        echo "Please configure DB_HOST, DB_USER, DB_PASSWORD and DB_PORT (this one optional) on your env file."
-        return 1
-    fi
-
     port=${DB_PORT:-3306}
     mysql --defaults-extra-file=<(echo $'[client]\npassword='"$DB_PASSWORD") \
         --batch \
@@ -47,3 +31,25 @@ bb_mysql_raw() {
 
 # # csv_result=$(bb_mysql_csv_n "SELECT ref,title,location FROM announcements.announcement LIMIT 5" | awk -F'\t' '{ sep=""; for(i = 1; i <= NF; i++) { gsub(/\\t/,"\t",$i); gsub(/\\n/,"\n",$i); gsub(/\\\\/,"\\",$i); gsub(/"/,"\"\"",$i); printf sep"\""$i"\""; sep=","; if(i==NF){printf"\n"}}}')
 # # csv_result=$(bb_mysql_csv_n "SELECT ref,title,location FROM announcements.announcement LIMIT 5")
+
+
+bb_databases_check() {
+    if [[ -z "$BB_PACKAGES_LOADED" ]]; then
+        echo "packages.sh helpers must be loaded before databases.sh"
+        exit 1
+    fi
+
+    if [[ "$DB_HOST" = "" ]] || [[ "$DB_USER" = "" ]] || [[ "$DB_PASSWORD" = "" ]]; then
+        echo "Please configure DB_HOST, DB_USER, DB_PASSWORD and DB_PORT (this one optional) on your env file."
+        exit 1
+    fi
+
+    if ! binary_exists "mysql"; then
+        echo "Install mysql for mysql binary to be available"
+        exit 1
+    fi
+}
+
+
+bb_databases_check
+BB_DATABASES_LOADED=1

@@ -36,3 +36,19 @@ bb_curl() {
 # else
 #   echo "failed"
 # fi
+
+bb_http_check() {
+    if [[ -z "$BB_PACKAGES_LOADED" ]]; then
+        echo "packages.sh helpers must be loaded before http.sh"
+        exit 1
+    fi
+
+    if ! binary_exists "curl"; then
+        echo "Install curl please"
+        exit 1
+    fi
+}
+
+
+bb_http_check
+BB_HTTP_LOADED=1

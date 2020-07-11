@@ -33,3 +33,5 @@ valid_number() {
         return 1
     fi
 }
+
+BB_VALIDATIONS_LOADED=1

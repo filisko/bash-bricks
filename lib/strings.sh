@@ -85,3 +85,5 @@ variables()
     egrep '^[a-zA-Z0-9_]+=' |
     sed 's/=.*$//' | sort -u
 }
+
+BB_STRINGS_LOADED=1
