@@ -34,8 +34,8 @@ bb_mysql_raw() {
 
 
 bb_databases_check() {
-    if [[ -z "$BB_PACKAGES_LOADED" ]]; then
-        echo "packages.sh helpers must be loaded before databases.sh"
+    if [[ -z "$BB_COMMON_LOADED" ]]; then
+        echo "common.sh must be loaded before databases.sh"
         exit 1
     fi
 
@@ -49,7 +49,6 @@ bb_databases_check() {
         exit 1
     fi
 }
-
 
 bb_databases_check
 BB_DATABASES_LOADED=1
