@@ -1,21 +1,21 @@
 #!/usr/bin/env bash
 
 db_exists() {
-    name="$1"
+    local db_name="$1"
 
-    if [[ ! -f "$CONFIG_DIR/$name" ]]; then
+    if [[ ! -f "$CONFIG_DIR/$db_name" ]]; then
         return 1
     fi
 }
 
 load_db() {
-    name="$1"
+    local db_name="$1"
 
-    if [[ -z "$name" ]] || [[ ! -f "$CONFIG_DIR/$name" ]]; then
+    if [[ -z "$db_name" ]] || [[ ! -f "$CONFIG_DIR/$db_name" ]]; then
         return 1
     fi
     
-    source "$CONFIG_DIR/$name"
+    source "$CONFIG_DIR/$db_name"
 }
 
 # bash -c "help declare"
@@ -32,9 +32,18 @@ store_var()
 }
 
 var_exists() {
-    db="$1"
-
+    local var_name="$1"
+    local db_name="$2"
     
+    # db_content=$(cat "$db_name")
+    # echo "$db_content"
+    db_content=$(cat "$CONFIG_DIR/$db_name")
+    # echo "$db_content"
+
+    regex="^declare .. ${var_name}="
+    if ! [[ "$db_content" =~ $regex ]]; then
+        return 1
+    fi
 }
 
 remove_var() {
@@ -80,5 +89,5 @@ bb_databases_check() {
     fi
 }
 
-bb_databases_check
-BB_DATABASES_LOADED=1
+# bb_databases_check
+# BB_DATABASES_LOADED=1

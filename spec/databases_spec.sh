@@ -1,0 +1,33 @@
+#https://github.com/shellspec/shellspec/blob/master/docs/references.md
+
+Include lib/databases.sh
+
+Describe 'bb_curl'
+
+  Context 'returns same curl status and error message when curl fails'
+    cat() {
+      echo 'declare -- normal="1"'
+      echo 'declare -i somenumber="123"'
+      echo 'declare -A max_day_by_month=([january]="31" [february]="29" [march]="31" )'
+      echo 'declare -r xd="123"'
+    }
+
+    It 'calls the date function'
+      When call var_exists var_name db_name
+      The status should be failure
+    End
+    
+    It 'calls the date function2'
+      When call var_exists normal db_name
+      The status should be success
+    End
+  End
+
+  It 'calls the date function'
+    cat() {
+      echo ''
+    }
+    When call var_exists var_name db_name
+    The status should be failure
+  End
+End
