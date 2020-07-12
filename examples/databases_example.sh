@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 
 # get results and foreach them
-result=$(bb_mysql_raw "SELECT ref,title,location FROM database.announcement LIMIT 5")
+result=$(bb_mysql_raw "SELECT id,title,description FROM my_database.articles LIMIT 5")
 OLDIFS=$IFS
 IFS=$'\t'
-echo "$result" | while read ref title location
+echo "$result" | while read id title description
 do
-    echo "$ref $title $location"
+    echo "$id $title $description"
 done
 IFS=$OLDIFS
 

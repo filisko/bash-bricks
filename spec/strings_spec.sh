@@ -53,62 +53,45 @@ Describe 'trim'
 End
 
 Describe 'upper'
-  Parameters
-    "happy" "text one TWO" "TEXT ONE TWO"
-  End
-
   Data:expand
-    #|$2
+    #|oNe two Three
   End
 
-  Example "$1"
+  Example "default"
     When call upper
-    The output should equal "$3"
+    The output should equal "ONE TWO THREE"
   End
 End
 
 Describe 'lower'
-  Parameters
-    "happy" "ONE two" "one two"
-  End
-
   Data:expand
-    #|$2
+    #|ONE two
   End
 
-  Example "$1"
+  Example "default"
     When call lower
-    The output should equal "$3"
+    The output should equal "one two"
   End
 End
 
 Describe 'camel'
-  Parameters
-    "happy" "One two" "OneTwo"
-  End
-
   Data:expand
-    #|$2
+    #|One two
   End
 
-  Example "$1"
+  Example "default"
     When call camel
-    The output should equal "$3"
+    The output should equal "OneTwo"
   End
 End
 
 Describe 'snake'
-  Parameters
-    "happy" "One" "one"
-    "happy" "One twOThreeFour hi" "one_tw_o_three_four"
-  End
-
   Data:expand
-    #|$2
+    #|One two ThreeFour
   End
 
-  Example "$1"
+  Example "default"
     When call snake
-    The output should equal "$3"
+    The output should equal "one_two_three_four"
   End
 End

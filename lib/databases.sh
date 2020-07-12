@@ -1,5 +1,47 @@
 #!/usr/bin/env bash
 
+db_exists() {
+    name="$1"
+
+    if [[ ! -f "$CONFIG_DIR/$name" ]]; then
+        return 1
+    fi
+}
+
+load_db() {
+    name="$1"
+
+    if [[ -z "$name" ]] || [[ ! -f "$CONFIG_DIR/$name" ]]; then
+        return 1
+    fi
+    
+    source "$CONFIG_DIR/$name"
+}
+
+# bash -c "help declare"
+store_var()
+{
+    local var=$1;
+    local db_name=$2;
+
+    if (( $# == 0 )); then
+        IFS=$'\n' set -- $(set | variables)
+    fi
+
+    declare -p "${var}" >> "$CONFIG_DIR/$db_name"
+}
+
+var_exists() {
+    db="$1"
+
+    
+}
+
+remove_var() {
+    echo "Test"
+}
+
+
 bb_mysql() {
     port=${DB_PORT:-3306}
     mysql --defaults-extra-file=<(echo $'[client]\npassword='"$DB_PASSWORD") \
