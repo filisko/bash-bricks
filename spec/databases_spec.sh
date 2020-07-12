@@ -8,8 +8,8 @@ Describe 'bb_curl'
     cat() {
       echo 'declare -- normal="1"'
       echo 'declare -i somenumber="123"'
-      echo 'declare -A max_day_by_month=([january]="31" [february]="29" [march]="31" )'
-      echo 'declare -r xd="123"'
+      echo 'declare -a indexed_array=([1]="31" [2]="29" [3]="31")'
+      echo 'declare -A associate_array=([january]="31" [february]="29" [march]="31" )'
     }
 
     It 'calls the date function'
@@ -23,7 +23,7 @@ Describe 'bb_curl'
     End
   End
 
-  It 'calls the date function'
+  It 'calls the date functionasd'
     cat() {
       echo ''
     }

@@ -8,15 +8,31 @@ db_exists() {
     fi
 }
 
-load_db() {
-    local db_name="$1"
+# load_db() {
+#     local db_name="$1"
 
-    if [[ -z "$db_name" ]] || [[ ! -f "$CONFIG_DIR/$db_name" ]]; then
-        return 1
-    fi
+#     # if [[ -z "$db_name" ]] || [[ ! -f "$CONFIG_DIR/$db_name" ]]; then
+#     #     return 1
+#     # fi
     
-    source "$CONFIG_DIR/$db_name"
+#     source "$CONFIG_DIR/$db_name"
+# }
+function load_db() {
+    echo eval " \
+  if [ -r '$CONFIG_DIR/$1' ] ; then \
+    source '$CONFIG_DIR/$1' ; \
+  fi \
+";
 }
+# function load_db() {
+#     local db_name="$1"
+
+#     # if [[ -z "$db_name" ]] || [[ ! -f "$CONFIG_DIR/$db_name" ]]; then
+#     #     return 1
+#     # fi
+    
+#     source "$CONFIG_DIR/$db_name"
+# }
 
 # bash -c "help declare"
 store_var()
@@ -34,25 +50,32 @@ store_var()
 var_exists() {
     local var_name="$1"
     local db_name="$2"
+    local db_content=$(cat "$CONFIG_DIR/$db_name")
+    local regex="^declare .. ${var_name}="
     
-    # db_content=$(cat "$db_name")
-    # echo "$db_content"
-    db_content=$(cat "$CONFIG_DIR/$db_name")
-    # echo "$db_content"
-
-    regex="^declare .. ${var_name}="
     if ! [[ "$db_content" =~ $regex ]]; then
         return 1
     fi
 }
 
 remove_var() {
-    echo "Test"
+    local var_name="$1"
+    local db_name="$2"
+    local db_path="$CONFIG_DIR/$db_name"
+    local db_path_tmp="$db_path.tmp"
+    
+    local regex="^declare .. ${var_name}="
+
+    while read -r line; do
+        [[ ! $line =~ $regex ]] && echo "$line"
+    done <"$db_path" > "$db_path_tmp"
+
+    mv "$db_path_tmp" "$db_path"
 }
 
 
 bb_mysql() {
-    port=${DB_PORT:-3306}
+    local port=${DB_PORT:-3306}
     mysql --defaults-extra-file=<(echo $'[client]\npassword='"$DB_PASSWORD") \
         -h "$DB_HOST" \
         -P "$port" \
@@ -61,7 +84,7 @@ bb_mysql() {
 }
 
 bb_mysql_raw() {
-    port=${DB_PORT:-3306}
+    local port=${DB_PORT:-3306}
     mysql --defaults-extra-file=<(echo $'[client]\npassword='"$DB_PASSWORD") \
         --batch \
         -N \
