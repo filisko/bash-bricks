@@ -13,12 +13,12 @@ Describe 'bb_curl'
     }
 
     It 'calls the date function'
-      When call var_exists var_name db_name
+      When call var_is_stored var_name db_name
       The status should be failure
     End
     
     It 'calls the date function2'
-      When call var_exists normal db_name
+      When call var_is_stored normal db_name
       The status should be success
     End
   End
@@ -27,7 +27,7 @@ Describe 'bb_curl'
     cat() {
       echo ''
     }
-    When call var_exists var_name db_name
+    When call var_is_stored var_name db_name
     The status should be failure
   End
 End

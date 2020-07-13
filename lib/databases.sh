@@ -9,11 +9,17 @@ db_exists() {
 }
 
 load_db() {
+    local db_name=$1
+
     echo eval " \
-  if [ -r '$CONFIG_DIR/$1' ] ; then \
-    source '$CONFIG_DIR/$1' ; \
+  if [ -r '$CONFIG_DIR/$db_name' ] ; then \
+    source '$CONFIG_DIR/$db_name' ; \
   fi \
 ";
+}
+
+remove_db() {
+    echo "removed"
 }
 
 # bash -c "help declare"
@@ -21,22 +27,28 @@ store_var() {
     local var_name=$1
     local db_name=$2
 
-    if var_exists "$var_name" "$db_name"; then
-        remove_var "$var_name" "$db_name"
+    if ! db_exists "$db_name"; then
+        return 1
+    fi
+
+    if ! var_is_stored "$var_name" "$db_name"; then
+        return 1
     fi
 
     if (( $# == 0 )); then
         IFS=$'\n' set -- $(set | variables)
     fi
 
-    if [[ -z "${var_name}" ]]; then
+    if ! declare -p "$var_name" &> /dev/null; then
         return 1
     fi
+
+    remove_var "$var_name" "$db_name"
 
     declare -p "$var_name" >> "$CONFIG_DIR/$db_name"
 }
 
-var_exists() {
+var_is_stored() {
     local var_name="$1"
     local db_name="$2"
     local db_content=$(cat "$CONFIG_DIR/$db_name")
