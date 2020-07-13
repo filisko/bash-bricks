@@ -23,11 +23,11 @@ Describe 'bb_curl'
   #   End
   # End
 
-  # It 'calls the date functionasd'
-  #   cat() {
-  #     echo ''
-  #   }
-  #   When call var_is_stored var_name db_name
-  #   The status should be failure
-  # End
+  It 'calls the date functionasd'
+    # cat() {
+    #   echo ''
+    # }
+    When call db_exists db_name
+    The status should be failure
+  End
 End
