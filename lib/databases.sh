@@ -8,52 +8,41 @@ db_exists() {
     fi
 }
 
-# load_db() {
-#     local db_name="$1"
-
-#     # if [[ -z "$db_name" ]] || [[ ! -f "$CONFIG_DIR/$db_name" ]]; then
-#     #     return 1
-#     # fi
-    
-#     source "$CONFIG_DIR/$db_name"
-# }
-function load_db() {
+load_db() {
     echo eval " \
   if [ -r '$CONFIG_DIR/$1' ] ; then \
     source '$CONFIG_DIR/$1' ; \
   fi \
 ";
 }
-# function load_db() {
-#     local db_name="$1"
-
-#     # if [[ -z "$db_name" ]] || [[ ! -f "$CONFIG_DIR/$db_name" ]]; then
-#     #     return 1
-#     # fi
-    
-#     source "$CONFIG_DIR/$db_name"
-# }
 
 # bash -c "help declare"
-store_var()
-{
-    local var=$1;
-    local db_name=$2;
+store_var() {
+    local var_name=$1
+    local db_name=$2
+
+    if var_exists "$var_name" "$db_name"; then
+        remove_var "$var_name" "$db_name"
+    fi
 
     if (( $# == 0 )); then
         IFS=$'\n' set -- $(set | variables)
     fi
 
-    declare -p "${var}" >> "$CONFIG_DIR/$db_name"
+    if [[ -z "${var_name}" ]]; then
+        return 1
+    fi
+
+    declare -p "$var_name" >> "$CONFIG_DIR/$db_name"
 }
 
 var_exists() {
     local var_name="$1"
     local db_name="$2"
     local db_content=$(cat "$CONFIG_DIR/$db_name")
-    local regex="^declare .. ${var_name}="
+    local regex="declare .. ${var_name}="
     
-    if ! [[ "$db_content" =~ $regex ]]; then
+    if ! [[ $db_content =~ $regex ]]; then
         return 1
     fi
 }
@@ -63,8 +52,7 @@ remove_var() {
     local db_name="$2"
     local db_path="$CONFIG_DIR/$db_name"
     local db_path_tmp="$db_path.tmp"
-    
-    local regex="^declare .. ${var_name}="
+    local regex="declare .. ${var_name}="
 
     while read -r line; do
         [[ ! $line =~ $regex ]] && echo "$line"
