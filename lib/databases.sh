@@ -2,20 +2,28 @@
 
 db_exists() {
     local db_name="$1"
+    local db_path="$(get_db_path "$db_name")"
 
-    if [[ ! -f "$CONFIG_DIR/$db_name" ]]; then
+    if [[ ! -f "$db_path" ]]; then
         return 1
     fi
 }
 
 load_db() {
-    local db_name=$1
+    local db_name="$1"
+    local db_path="$(get_db_path "$db_name")"
 
     echo eval " \
-  if [ -r '$CONFIG_DIR/$db_name' ] ; then \
-    source '$CONFIG_DIR/$db_name' ; \
+  if [ -r '$db_path' ] ; then \
+    source '$db_path' ; \
   fi \
 ";
+}
+
+get_db_path() {
+    local db_name="$1"
+
+    printf "$DATABASES_DIR/${db_name}.vars.sh"
 }
 
 remove_db() {
@@ -25,7 +33,8 @@ remove_db() {
 # bash -c "help declare"
 store_var() {
     local var_name=$1
-    local db_name=$2
+    local db_name="$2"
+    local db_path="$(get_db_path "$db_name")"
 
     if ! db_exists "$db_name"; then
         return 1
@@ -45,13 +54,14 @@ store_var() {
 
     remove_var "$var_name" "$db_name"
 
-    declare -p "$var_name" >> "$CONFIG_DIR/$db_name"
+    declare -p "$var_name" >> "$db_path"
 }
 
 var_is_stored() {
     local var_name="$1"
     local db_name="$2"
-    local db_content=$(cat "$CONFIG_DIR/$db_name")
+    local db_path="$(get_db_path "$db_name")"
+    local db_content=$(cat "$db_path")
     local regex="declare .. ${var_name}="
     
     if ! [[ $db_content =~ $regex ]]; then
@@ -62,7 +72,7 @@ var_is_stored() {
 remove_var() {
     local var_name="$1"
     local db_name="$2"
-    local db_path="$CONFIG_DIR/$db_name"
+    local db_path="$(get_db_path "$db_name")"
     local db_path_tmp="$db_path.tmp"
     local regex="declare .. ${var_name}="
 
