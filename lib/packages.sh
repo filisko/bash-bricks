@@ -41,6 +41,3 @@ bb_packages_check() {
         exit 1
     fi
 }
-
-bb_packages_check
-BB_PACKAGES_LOADED=1

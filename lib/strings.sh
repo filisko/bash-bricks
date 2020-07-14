@@ -184,5 +184,3 @@ lines()
 
     grep -E -v '^[[:space:]]*#|^[[:space:]]*$' "$@"
 }
-
-BB_STRINGS_LOADED=1

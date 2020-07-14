@@ -19,5 +19,3 @@ binary_exists() {
         return 1
     fi
 }
-
-BB_COMMON_LOADED=1

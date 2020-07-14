@@ -35,7 +35,3 @@ bb_http_check() {
         exit 1
     fi
 }
-
-
-bb_http_check
-BB_HTTP_LOADED=1
