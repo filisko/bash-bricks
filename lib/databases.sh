@@ -30,7 +30,7 @@ create_db() {
 get_db_path() {
     local db_name="$1"
 
-    printf "$DATABASES_DIR/${db_name}.vars.sh"
+    printf "%s.vars.sh" "$DATABASES_DIR/${db_name}"
 }
 
 remove_db() {

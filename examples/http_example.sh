@@ -9,3 +9,13 @@ if [ $code -eq 0 ]; then
 else
   echo "failed"
 fi
+
+response=$(bb_curl http://example.com/notfound)
+code=$?
+
+if [ $code -eq 0 ]; then
+  echo "success"
+  echo "response content $response"
+else
+  echo "failed"
+fi
