@@ -12,4 +12,5 @@ IFS=$OLDIFS
 
 
 # get results and convert them to csv
-csv_result=$(bb_mysql_csv_n "SELECT ref,title,location FROM announcements.announcement LIMIT 5" | awk -F'\t' '{ sep=""; for(i = 1; i <= NF; i++) { gsub(/\\t/,"\t",$i); gsub(/\\n/,"\n",$i); gsub(/\\\\/,"\\",$i); gsub(/"/,"\"\"",$i); printf sep"\""$i"\""; sep=","; if(i==NF){printf"\n"}}}')
+csv_result=$(bb_mysql_csv "SELECT ref,title,location FROM announcements.announcement LIMIT 5")
+

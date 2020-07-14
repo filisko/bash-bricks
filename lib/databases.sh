@@ -111,6 +111,10 @@ bb_mysql_raw() {
         -e "$1"
 }
 
+bb_mysql_csv() {
+    bb_mysql_raw "$1" | awk -F'\t' '{ sep=""; for(i = 1; i <= NF; i++) { gsub(/\\t/,"\t",$i); gsub(/\\n/,"\n",$i); gsub(/\\\\/,"\\",$i); gsub(/"/,"\"\"",$i); printf sep"\""$i"\""; sep=","; if(i==NF){printf"\n"}}}'
+}
+
 bb_databases_check() {
     if [[ -z "$BB_COMMON_LOADED" ]]; then
         echo "common.sh must be loaded before databases.sh"

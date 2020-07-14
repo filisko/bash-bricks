@@ -2,7 +2,7 @@
 
 Include lib/databases.sh
 
-Describe 'bb_curl'
+Describe 'bb_mysql_csvasd'
 
   # Context 'returns same curl status and error message when curl fails'
   #   cat() {

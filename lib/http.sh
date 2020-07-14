@@ -2,12 +2,12 @@
 
 bb_curl() {
     # store the whole response with the status at the and
-    local http_response=$(curl --silent --show-error --write-out "HTTPSTATUS:%{http_code}" "$@" 2>&1)
-    local curl_status=$?
-    
-    local http_body=$(echo "$http_response" | sed -E 's/HTTPSTATUS\:[0-9]{3}$//')
-    local http_status=$(echo "$http_response" | tr -d '\n' | sed -E 's/.*HTTPSTATUS:([0-9]{3})$/\1/')
-    local short_http_status=${http_status:0:1} # first number of http status code 400 -> 4
+    http_response=$(curl --silent --show-error --write-out "HTTPSTATUS:%{http_code}" "$@" 2>&1)
+    curl_status=$?
+
+    http_body=$(echo $http_response | sed -E 's/HTTPSTATUS\:[0-9]{3}$//')
+    http_status=$(echo $http_response | tr -d '\n' | sed -E 's/.*HTTPSTATUS:([0-9]{3})$/\1/')
+    short_http_status=${http_status:0:1} # first number of http status code 400 -> 4
 
     if [ $curl_status -ne 0 ]; then
         printf "$http_body"
@@ -21,7 +21,6 @@ bb_curl() {
 
     # print the body and return the code
     printf "$http_body"
-    
     return $short_http_status
 }
 
