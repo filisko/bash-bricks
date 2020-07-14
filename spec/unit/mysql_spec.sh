@@ -3,7 +3,7 @@
 Include lib/databases.sh
 
 Describe 'bb_mysql_csv'
-  It 'returns first number of http status code when doesnt start with 2'
+  It 'adds double commas and commas to separate the values'
     bb_mysql_raw() {
       cat <<EOL
 1	random text!123 "ñ,.	01234
