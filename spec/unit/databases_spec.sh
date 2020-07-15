@@ -75,6 +75,9 @@ Describe 'before / after hook sample'
       The variable bb_log_called should eq 1
       The variable var_is_stored_called should eq 1
       The variable remove_var_called should eq 1
+      The path $(get_db_path "db") should be exist
+      The path $(get_db_path "db") should include vare
+
     End
 
   End
