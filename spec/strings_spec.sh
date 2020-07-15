@@ -76,12 +76,12 @@ End
 
 Describe 'camel'
   Data:expand
-    #|One two
+    #|one Two tHree
   End
 
   Example "default"
     When call camel
-    The output should equal "OneTwo"
+    The output should equal "OneTwoTHree"
   End
 End
 
