@@ -16,11 +16,6 @@ Describe 'variables'
 End
 
 Describe 'flatten'
-    data() {
-      set
-    }
-    Data data
-
     Example "default"
         this=test123
         When call flatten "replace {{this}}"
