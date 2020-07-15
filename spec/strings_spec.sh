@@ -11,7 +11,7 @@ Describe 'variables'
 
         myvar=test123
         When call variables
-        The output should include "OSTYPE"
+        The output should include "myvar"
     End
 
     Example "when variable does not exist it does not appear on output"
