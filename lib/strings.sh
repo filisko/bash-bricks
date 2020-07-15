@@ -1,28 +1,28 @@
 #!/usr/bin/env bash
 
-camel()
-{
-    # <doc:camel>
-    #
-    # Make text from stdin camel case.
-    #
-    # </doc:camel>
+# camel()
+# {
+#     # <doc:camel>
+#     #
+#     # Make text from stdin camel case.
+#     #
+#     # </doc:camel>
 
-    sed 's/_/ /g' |
-    sed 's/\<\(.\)/\U\1/g' |
-    sed 's/ //g'
-}
+#     sed 's/_/ /g' |
+#     sed 's/\<\(.\)/\U\1/g' |
+#     sed 's/ //g'
+# }
 
-snake()
-{
-    # <doc:snake>
-    #
-    # Make text from stdin snake case.
-    #
-    # </doc:snake>
+# snake()
+# {
+#     # <doc:snake>
+#     #
+#     # Make text from stdin snake case.
+#     #
+#     # </doc:snake>
 
-    sed 's/\([[:upper:]]\)/ \1/g' | detox
-}
+#     sed 's/\([[:upper:]]\)/ \1/g' | detox
+# }
 
 title()
 {
