@@ -21,13 +21,40 @@ binary_exists() {
 }
 
 get_lines_between() {
-    # input=$()
-
-    cat - | awk '/line1/,/line4/'
+    start="$1"
+    end="$2"
     
-    # cat - | awk '/line1/ {nr = NR} /line5/ {exit} nr && NR > nr+6'
-    # cat - | awk '/line1/,/line5/'
-    # cat - | awk '/line1/,/A/&&!/line5/'
+    inside_match=0
+    tmp_result=""
+    
+    declare -a results
 
-    # printf "$input"
+    while read LINE; do
+        if [[ "$LINE" =~ $start ]]; then
+            inside_match=1
+        fi
+
+        if [[ $inside_match -eq 1 ]]; then
+            if [[ -z "$tmp_result" ]]; then
+                tmp_result="${LINE}"
+            else
+                tmp_result="${tmp_result}\n${LINE}"
+            fi
+        fi
+
+        if [[ $inside_match -eq 1 ]] && [[ "$LINE" =~ $end ]]; then
+            results=("${results[@]}" "${tmp_result}")
+            
+            inside_match=0
+            tmp_result=""
+        fi
+
+        if [[ $inside_match -eq 1 ]] && [[ "$LINE" =~ $start ]]; then
+            tmp_result="${LINE}"
+        fi
+    done <<< $(cat -)
+
+    for key in "${!results[@]}"; do
+        echo -e "${results[$key]}"
+    done
 }
