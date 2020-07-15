@@ -74,24 +74,24 @@ Describe 'lower'
   End
 End
 
-Describe 'camel'
-  Data:expand
-    #|One two
-  End
+# Describe 'camel'
+#   Data:expand
+#     #|One two
+#   End
 
-  Example "default"
-    When call camel
-    The output should equal "OneTwo"
-  End
-End
+#   Example "default"
+#     When call camel
+#     The output should equal "OneTwo"
+#   End
+# End
 
-Describe 'snake'
-  Data:expand
-    #|One two ThreeFour
-  End
+# Describe 'snake'
+#   Data:expand
+#     #|One two ThreeFour
+#   End
 
-  Example "default"
-    When call snake
-    The output should equal "one_two_three_four"
-  End
-End
+#   Example "default"
+#     When call snake
+#     The output should equal "one_two_three_four"
+#   End
+# End
