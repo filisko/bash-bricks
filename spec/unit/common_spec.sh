@@ -55,6 +55,25 @@ EOL
 )"
   End
 
+
+  It 'short group'
+    data() {
+      cat <<EOL
+group_starts
+group_ends
+EOL
+    }
+    Data data
+
+    When call get_lines_between "group_starts" "group_ends"
+    The output should equal "$(cat <<EOL
+group_starts
+group_ends
+EOL
+)"
+  End
+
+
   It 'opened/not closed group in between'
     data() {
       cat <<EOL
