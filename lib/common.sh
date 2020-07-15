@@ -52,7 +52,7 @@ get_lines_between() {
         if [[ $inside_match -eq 1 ]] && [[ "$LINE" =~ $start ]]; then
             tmp_result="${LINE}"
         fi
-    done <<< $(cat -)
+    done <<< "$(cat -)"
 
     for key in "${!results[@]}"; do
         # echo -e "${results[$key]}"
