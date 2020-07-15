@@ -19,3 +19,15 @@ binary_exists() {
         return 1
     fi
 }
+
+get_lines_between() {
+    # input=$()
+
+    cat - | awk '/line1/,/line4/'
+    
+    # cat - | awk '/line1/ {nr = NR} /line5/ {exit} nr && NR > nr+6'
+    # cat - | awk '/line1/,/line5/'
+    # cat - | awk '/line1/,/A/&&!/line5/'
+
+    # printf "$input"
+}
