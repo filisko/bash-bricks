@@ -26,8 +26,7 @@ get_lines_between() {
     
     declare -i inside_match=0
     declare tmp_group_content=""
-    
-    declare -a group_contents
+    declare -a group_contents=()
 
     while read LINE; do
         if [[ "$LINE" =~ $start ]]; then
