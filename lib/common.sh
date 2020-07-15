@@ -56,6 +56,8 @@ get_lines_between() {
 
     for key in "${!results[@]}"; do
         # echo -e "${results[$key]}"
-        echo -ne "${results[$key]}\n"
+        # echo -ne "${results[$key]}\n"
+        value="${results[$key]}"
+        printf "$value\n"
     done
 }
