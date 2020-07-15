@@ -24,8 +24,8 @@ get_lines_between() {
     start="$1"
     end="$2"
     
-    inside_match=0
-    tmp_result=""
+    declare -i inside_match=0
+    declare tmp_result=""
     
     declare -a results
 
