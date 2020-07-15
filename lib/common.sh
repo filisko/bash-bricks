@@ -25,9 +25,9 @@ get_lines_between() {
     end="$2"
     
     declare -i inside_match=0
-    declare tmp_result=""
+    declare tmp_group_content=""
     
-    declare -a results
+    declare -a group_contents
 
     while read LINE; do
         if [[ "$LINE" =~ $start ]]; then
@@ -35,29 +35,27 @@ get_lines_between() {
         fi
 
         if [[ $inside_match -eq 1 ]]; then
-            if [[ -z "$tmp_result" ]]; then
-                tmp_result="${LINE}"
+            if [[ -z "$tmp_group_content" ]]; then
+                tmp_group_content="${LINE}"
             else
-                tmp_result="${tmp_result}\n${LINE}"
+                tmp_group_content="${tmp_group_content}\n${LINE}"
             fi
         fi
 
         if [[ $inside_match -eq 1 ]] && [[ "$LINE" =~ $end ]]; then
-            results=("${results[@]}" "${tmp_result}")
+            group_contents=("${group_contents[@]}" "${tmp_group_content}")
             
             inside_match=0
-            tmp_result=""
+            tmp_group_content=""
         fi
 
         if [[ $inside_match -eq 1 ]] && [[ "$LINE" =~ $start ]]; then
-            tmp_result="${LINE}"
+            tmp_group_content="${LINE}"
         fi
     done <<< "$(cat -)"
 
-    for key in "${!results[@]}"; do
-        # echo -e "${results[$key]}"
-        # echo -ne "${results[$key]}\n"
-        value="${results[$key]}"
-        printf "$value\n"
+    for key in "${!group_contents[@]}"; do
+        content="${group_contents[$key]}"
+        printf "$content\n"
     done
 }
