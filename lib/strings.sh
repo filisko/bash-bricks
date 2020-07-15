@@ -8,9 +8,9 @@ camel()
     #
     # </doc:camel>
 
-    sed 's/_/ /g' |
-    sed 's/\<\(.\)/\U\1/g' |
-    sed 's/ //g'
+    input="$(cat -)"
+    result=(${input//_/ })
+    printf %s "${result[@]^}"
 }
 
 snake()
