@@ -3,22 +3,37 @@
 Include lib/strings.sh
 
 Describe 'variables'
-    data() {
-      set
-    }
-    Data data
+    Example "when variable exists it appears on the output"
+        data() {
+            set
+        }
+        Data data
 
-    Example "default"
         myvar=test123
         When call variables
-        The output should include "myvar"
+        The output should include "OSTYPE"
+    End
+
+    Example "when variable does not exist it does not appear on output"
+        data() {
+            set
+        }
+        Data data
+
+        When call variables
+        The output should not include "nonexistentvar"
     End
 End
 
 Describe 'flatten'
-    Example "default"
+    Example "when variable exists gets replaced"
         this=test123
         When call flatten "replace {{this}}"
         The output should equal "replace test123"
+    End
+
+    Example "when variable does not exist nothing happens"
+        When call flatten "replace {{this}}"
+        The output should equal "replace {{this}}"
     End
 End
