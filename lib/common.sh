@@ -55,6 +55,6 @@ get_lines_between() {
     done <<< $(cat -)
 
     for key in "${!results[@]}"; do
-        printf "${results[$key]}\n"
+        echo -e "${results[$key]}"
     done
 }
