@@ -23,6 +23,7 @@ binary_exists() {
 get_lines_between() {
     start="$1"
     end="$2"
+    separator="$3"
     
     declare -i inside_match=0
     declare tmp_group_content=""
@@ -55,6 +56,9 @@ get_lines_between() {
 
     for key in "${!group_contents[@]}"; do
         content="${group_contents[$key]}"
+        if ! [[ -z "$separator" ]]; then
+            printf "$separator\n"
+        fi
         printf "$content\n"
     done
 }
