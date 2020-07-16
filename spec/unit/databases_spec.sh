@@ -15,30 +15,6 @@ Describe 'before / after hook sample'
       printf "%s.vars.sh" "${db_name}"
     }
 
-    # It 'xddd'
-    #   db_exists() {
-    #     db_exists_called=1
-    #     return 1
-    #   }
-
-    #   create_db() {
-    #     create_db_called=1
-    #     return 0
-    #   }
-
-    #   bb_log() {
-    #     bb_log_called=1
-    #     return 0
-    #   }
-
-    #   When call store_var "var" "db"
-    #   The status should be failure
-
-    #   The variable db_exists_called should eq 1
-    #   The variable create_db_called should eq 1
-    #   The variable bb_log_called should eq 1
-    # End
-
     It 'adds double commas and commas to separate the values2'
       db_exists() {
         db_exists_called=1
@@ -65,6 +41,12 @@ Describe 'before / after hook sample'
         return 0
       }
 
+      that_variable_is_stored() {
+        local var_name="$1"
+        local db_name="$2"
+        var_is_stored "$var_name" "$db_name"
+      }
+
       var="now is defined :)"
 
       When call store_var "var" "db"
@@ -76,7 +58,8 @@ Describe 'before / after hook sample'
       The variable var_is_stored_called should eq 1
       The variable remove_var_called should eq 1
       The path $(get_db_path "db") should be exist
-      The path $(get_db_path "db") should include vare
+      The path $(get_db_path "db") should include var
+      Assert that_variable_is_stored "var" "db"
 
     End
 
