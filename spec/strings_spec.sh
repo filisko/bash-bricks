@@ -31,7 +31,9 @@ Describe 'flatten'
         When call flatten "replace {{this}}"
         The output should equal "replace test123"
     End
+End
 
+Describe 'flatten'
     Example "when variable does not exist nothing happens"
         When call flatten "replace {{this}}"
         The output should equal "replace {{this}}"
