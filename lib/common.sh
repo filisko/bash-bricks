@@ -57,8 +57,8 @@ get_lines_between() {
     for key in "${!group_contents[@]}"; do
         content="${group_contents[$key]}"
         if ! [[ -z "$separator" ]]; then
-            printf "$separator\n"
+            echo -e "$separator"
         fi
-        printf "$content\n"
+        echo -e "$content"
     done
 }
