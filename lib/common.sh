@@ -14,6 +14,16 @@ is_osx() {
     return 1
 }
 
+in_prod() {
+    if [[ "$(hostname)" != "$PRODUCTION_HOSTNAME" ]]; then
+        return 1
+    fi
+}
+
+in_dev() {
+    echo "in production"
+}
+
 binary_exists() {
     if ! which "$1" > /dev/null; then
         return 1
