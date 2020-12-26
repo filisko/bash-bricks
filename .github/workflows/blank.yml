@@ -1,0 +1,16 @@
+name: test matrix
+on: push
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest]
+        include:
+        - os: macos-latest
+        - os: ubuntu-latest
+    steps:
+     - uses: actions/checkout@v1
+     - run: |
+        - echo ${{matrix.TARGET}}
+        - wget https://git.io/shellspec && sh ./shellspec --yes && rm shellspec
