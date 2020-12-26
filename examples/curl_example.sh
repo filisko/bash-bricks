@@ -1,21 +1,13 @@
 #!/usr/bin/env bash
 
-response=$(bb_curl -X POST -F 'grant_type=password' -F "client_id=1234" https://example.com)
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+
+source "$DIR/../boot.sh"
+source "$BB_LIB_DIR/curl.sh"
+source "$BB_LIB_DIR/logs.sh"
+
+response=$(bb_curl htatp://example.com/notfound)
 code=$?
 
-if [ $code -eq 0 ]; then
-  echo "success"
-  echo "response content $response"
-else
-  echo "failed"
-fi
-
-response=$(bb_curl http://example.com/notfound)
-code=$?
-
-if [ $code -eq 0 ]; then
-  echo "success"
-  echo "response content $response"
-else
-  echo "failed"
-fi
+echo "$code"
+echo "$response"
