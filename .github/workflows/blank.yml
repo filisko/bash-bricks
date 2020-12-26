@@ -10,7 +10,10 @@ jobs:
         - os: macos-latest
         - os: ubuntu-latest
     steps:
-     - uses: actions/checkout@v1
-     - run: |
-        - echo ${{matrix.TARGET}}
-        - wget https://git.io/shellspec && sh ./shellspec --yes && rm shellspec
+      - uses: actions/checkout@v1
+        
+      - name: 'run shellspec tests'
+        run: |
+            mkdir .install
+            curl -fsSL https://git.io/shellspec | sh -s -- -p $PWD/.install --yes
+            $PWD/.install/bin/shellspec
