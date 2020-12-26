@@ -1,6 +1,6 @@
 #https://github.com/shellspec/shellspec/blob/master/docs/references.md
 
-Include lib/http.sh
+Include lib/curl.sh
 
 Describe 'bb_curl'
   It 'returns same curl status and error message when curl fails'

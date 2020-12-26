@@ -1,6 +1,6 @@
 #https://github.com/shellspec/shellspec/blob/master/docs/references.md
 
-Include lib/databases.sh
+Include lib/mysql.sh
 
 Describe 'bb_mysql_csv'
   It 'adds double commas and commas to separate the values'
