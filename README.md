@@ -6,6 +6,8 @@ Simple Bash framework that provides carefully crafted functions with good practi
 
 ## Installation
 
+You can take any function you need for your project by looking at the source code, or you can...
+
 Clone the git repo (or download the zip) wherever your scripts will be located:
 
 ```sh
