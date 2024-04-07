@@ -6,19 +6,24 @@ source "$DIR/../boot.sh"
 source "$BB_LIB_DIR/env.sh"
 source "$BB_LIB_DIR/mysql.sh"
 
-load_env "$DIR/.env"
+load_env "$DIR/mariadb.env"
 
-echo $TEST
+# you can configure either by env variables or functions
+# function bb_mysql_get_host() {
+#     echo "127.0.0.1"
+# }
 
-# # get results and foreach them
-# result=$(bb_mysql_raw "SELECT id,title,description FROM my_database.articles LIMIT 5")
-# OLDIFS=$IFS
-# IFS=$'\t'
-# echo "$result" | while read id title description
-# do
-#     echo "$id $title $description"
-# done
-# IFS=$OLDIFS
+bb_mysql_check
+
+# get results and foreach them
+result=$(bb_mysql_raw "SELECT ID,user_login FROM wordpress.wp_users LIMIT 5")
+OLDIFS=$IFS
+IFS=$'\t'
+echo "$result" | while read id username
+do
+    echo "$id $username"
+done
+IFS=$OLDIFS
 
 
 # # get results and convert them to csv
