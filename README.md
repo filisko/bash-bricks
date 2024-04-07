@@ -6,10 +6,20 @@ Simple Bash framework that provides carefully crafted functions with good practi
 
 ## Installation
 
-Clone the git repo wherever your scripts will be located:
+Clone the git repo (or download the zip) wherever your scripts will be located:
 
 ```sh
 git clone git@github.com:filisko/bash-bricks.git
+```
+
+```bash
+#!/usr/bin/env bash
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+
+# simply load 
+source "$DIR/path-to-bash-bricks/boot.sh"
+# load the modules you need
+source "$BB_LIB_DIR/curl.sh"
 ```
 
 ## Contribute
