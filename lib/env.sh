@@ -3,7 +3,7 @@
 load_env() {
     local path="$1"
 
-    if [ -f "$path" ]; then
+    if [ ! -f "$path" ]; then
         return 1;
     fi
     

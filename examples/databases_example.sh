@@ -3,15 +3,12 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 source "$DIR/../boot.sh"
+source "$BB_LIB_DIR/env.sh"
 source "$BB_LIB_DIR/mysql.sh"
 
-if [ -f .env ]; then
-    num_lines=$(cat .env | sed 's/#.*//g')
+load_env "$DIR/.env"
 
-    if [ ! -z "$num_lines" ]; then
-        export $(echo -n "$num_lines" | xargs)
-    fi
-fi
+echo $TEST
 
 # # get results and foreach them
 # result=$(bb_mysql_raw "SELECT id,title,description FROM my_database.articles LIMIT 5")
