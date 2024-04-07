@@ -1,5 +1,7 @@
 # Bash bricks 🧱
 
+![ci](https://github.com/filisko/bash-bricks/actions/workflows/main.yml/badge.svg)
+
 Simple Bash framework that provides carefully crafted functions with good practices from the Bash and shell scripts community and some of my inventions.
 
 ## Installation
