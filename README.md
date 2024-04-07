@@ -12,13 +12,15 @@ Clone the git repo (or download the zip) wherever your scripts will be located:
 git clone git@github.com:filisko/bash-bricks.git
 ```
 
+Then place the following code on the top of the scripts where you would like to use the project:
 ```bash
 #!/usr/bin/env bash
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
-# simply load 
-source "$DIR/path-to-bash-bricks/boot.sh"
-# load the modules you need
+# always boot
+source "$DIR/relative-path-to-bash-bricks/boot.sh"
+
+# load the functions you need (see that you have $BB_LIB_DIR now)
 source "$BB_LIB_DIR/curl.sh"
 ```
 
