@@ -1,25 +1,29 @@
 #!/usr/bin/env bash
 
-# redefinable
-bb_mysql_get_host() {
-    echo $DB_HOST;
-}
+if ! declare -f bb_mysql_get_host > /dev/null; then
+    bb_mysql_get_host() {
+        echo $DB_HOST;
+    }
+fi
 
-# redefinable
-bb_mysql_get_port() {
-    local port=${DB_PORT:-3306}
-    echo $port;
-}
+if ! declare -f bb_mysql_get_port > /dev/null; then
+    bb_mysql_get_port() {
+        local port=${DB_PORT:-3306}
+        echo $port;
+    }
+fi
 
-# redefinable
-bb_mysql_get_user() {
-    echo $DB_USER;
-}
+if ! declare -f bb_mysql_get_user > /dev/null; then
+    bb_mysql_get_user() {
+        echo $DB_USER;
+    }
+fi
 
-# redefinable
-bb_mysql_get_password() {
-    echo $DB_PASSWORD;
-}
+if ! declare -f bb_mysql_get_password > /dev/null; then
+    bb_mysql_get_password() {
+        echo $DB_PASSWORD;
+    }
+fi
 
 bb_mysql_check() {
     local port=${DB_PORT:-3306}
@@ -30,7 +34,6 @@ bb_mysql_check() {
         -u "$(bb_mysql_get_user)" \
         -e "SELECT VERSION();"
 }
-
 
 bb_mysql() {
     mysql --defaults-extra-file=<(echo $'[client]\npassword='"$(bb_mysql_get_password)") \
