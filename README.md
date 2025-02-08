@@ -26,6 +26,8 @@ source "$DIR/relative-path-to-bash-bricks/boot.sh"
 source "$BB_LIB_DIR/curl.sh"
 ```
 
+(See the examples folder](https://github.com/filisko/bash-bricks/tree/master/examples)
+
 ## Contribute
 
 Do you want to add some more carefully crafted Bash functions? Please share them!
