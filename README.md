@@ -26,7 +26,7 @@ source "$DIR/relative-path-to-bash-bricks/boot.sh"
 source "$BB_LIB_DIR/curl.sh"
 ```
 
-(See the examples folder](https://github.com/filisko/bash-bricks/tree/master/examples)
+[See the examples folder](https://github.com/filisko/bash-bricks/tree/master/examples)
 
 ## Contribute
 
